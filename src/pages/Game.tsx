@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
-import ChessBoard from '../components/ChessBoard'
+
 import Button from '../components/Button'
 import { useSocket } from '../hooks/useSocket'
 import { Chess } from 'chess.js'
+import { ChessBoard } from '../components/ChessBoard'
 export const INIT_GAME="init_game"
 export const MOVE="move"
 export const GAME_OVER="game_over"
@@ -18,7 +19,6 @@ const Game = () => {
           const message=JSON.parse(e.data)
        switch (message.type) {
         case INIT_GAME:
-            setchess(new Chess())
             setboard(chess.board())
             break;
         case MOVE:
@@ -43,7 +43,7 @@ const Game = () => {
       <div className='pt-8 max-w-screen-lg w-full'>
         <div className='grid grid-cols-6 gap-4 w-full  '>
             <div className='col-span-4 w-full'>
-            <ChessBoard board={board} />
+            <ChessBoard chess={chess} setBoard={setboard} socket={socket} board={board} />
             </div>
             <div>
                 <Button onClick={() => {
